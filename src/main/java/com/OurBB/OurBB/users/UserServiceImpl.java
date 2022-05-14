@@ -10,13 +10,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Users getUserById(int userId) {
-        Users user=repo.findById(userId).get();
-        return user;
+        return repo.findById(userId).get();
     }
 
     @Override
     public Users createUser(Users users) {
-        return null;
+        Users user=repo.save(users);
+        return user;
     }
 
     @Override
