@@ -1,10 +1,14 @@
 package com.OurBB.OurBB.dealer;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class DealerServiceImpl implements DealerService{
+    @Autowired
+    DealerRepo dealerRepo;
+
     @Override
     public List<Dealers> allDealers() {
         return null;
@@ -12,12 +16,14 @@ public class DealerServiceImpl implements DealerService{
 
     @Override
     public Dealers getDealerById(int dealerId) {
-        return null;
+        Dealers dealer=dealerRepo.findById(dealerId).get();
+        return dealer;
     }
 
     @Override
     public Dealers createDealers(Dealers dealers) {
-        return null;
+        Dealers dealer=dealerRepo.save(dealers);
+        return dealer;
     }
 
     @Override

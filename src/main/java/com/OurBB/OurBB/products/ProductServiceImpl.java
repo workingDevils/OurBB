@@ -39,12 +39,41 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Products updateProduct(Products products) {  //only dealer can update
-        return null;
+    public Products updateProduct(int productId,double price,double quantity,Integer dealerId) {  //only dealer can update
+        Optional<Dealers> dealer=dealerRepo.findById(dealerId);
+        Products product=null;
+        if(dealer.isPresent())
+        {
+            product=productRepo.findById(productId).get();
+            if(price!=0 && quantity!=0 )
+            {
+                product.setPrice(price);
+                product.setQuantity(quantity);
+                product=productRepo.save(product);
+            }
+            else if(price!=0 )
+            {
+                product.setPrice(price);
+                product=productRepo.save(product);
+            }
+            else if( quantity!=0 )
+            {
+                product.setQuantity(quantity);
+                product=productRepo.save(product);
+            }
+        }
+        return product;
     }
 
     @Override
-    public Products deleteProduct(int productId) {      //only dealer can update
-        return null;
-    }
+    public String deleteProduct(int productId,Integer dealerId) {      //only dealer can update
+        Optional<Dealers> dealer=dealerRepo.findById(dealerId);
+        String response=null;
+        if(dealer.isPresent())
+        {
+            productRepo.deleteById(productId);
+            response="product deleted successfully by dealer- "+dealerId;
+        }
+        return response;
+        }
 }
