@@ -13,7 +13,6 @@ public class UserController {
     public Users getUserById(@PathVariable int userId)
     {
         Users user=userService.getUserById(userId);
-        System.out.println(user);
         return user;
     }
 
