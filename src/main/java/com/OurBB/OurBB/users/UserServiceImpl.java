@@ -21,11 +21,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Users updateUser(Users users) {
-        return null;
+        Users user=repo.save(users);
+        return user;
     }
 
     @Override
-    public Users deleteUser(int userId) {
-        return null;
+    public String deleteUser(int userId) {
+        repo.deleteById(userId);
+        return "user details deleted successfully";
     }
 }

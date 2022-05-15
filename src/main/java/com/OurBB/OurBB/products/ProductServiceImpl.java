@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Products getProductByName(String productName) {
-        Products product=productRepo.getProductByName();
+        Products product=productRepo.getProductByName(productName).get(0);
         return product;
     }
 
