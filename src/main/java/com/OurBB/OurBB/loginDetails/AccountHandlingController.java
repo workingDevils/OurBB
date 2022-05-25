@@ -1,10 +1,11 @@
 package com.OurBB.OurBB.loginDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.SecureRandom;
 
 @RestController
 public class AccountHandlingController {
@@ -16,7 +17,14 @@ public class AccountHandlingController {
     Account getAccountByUserName(@PathVariable String userName)
     {
         Account account=accountRepo.getAccount(userName);
-        System.out.println(account);
+        return account;
+    }
+    @PostMapping("/createAccount")
+    Account createAccount(@RequestBody Account account)
+    {
+        PasswordEncoder passwordEncoder=new BCryptPasswordEncoder(10,new SecureRandom());
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        account=accountRepo.save(account);
         return account;
     }
 }

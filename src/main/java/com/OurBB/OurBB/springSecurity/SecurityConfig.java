@@ -18,6 +18,7 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import javax.sql.DataSource;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        PasswordEncoder passwordEncoder=new BCryptPasswordEncoder(10,new SecureRandom());
+        return passwordEncoder;
 
     }
 
